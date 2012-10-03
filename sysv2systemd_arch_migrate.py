@@ -68,6 +68,7 @@ def parse_rc_conf():
 		line = line.rstrip("\n")
 		if not line.startswith('#') and '=' in line:
 			name, sep, value = line.partition('=')
+			value = value.partition('#')[0].strip();
 
 			if name == 'LOCALE':
 				lang = value.strip('"')
@@ -87,7 +88,7 @@ def parse_rc_conf():
 				modules = value.lstrip('(').rstrip(')').split()
 	rc_conf_file.close()
 	try:
-		write_conf('hostname', values=('hostname'))
+		write_conf('hostname', values=(hostname))
 		write_conf('vconsole.conf', KEYMAP=keymap, FONT=consolefont, FONT_MAP=fontmap)
 		write_conf('locale.conf', LANG=lang)
 		write_conf('timezone', values=(timezone))
